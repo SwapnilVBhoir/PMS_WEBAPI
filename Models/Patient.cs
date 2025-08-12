@@ -1,15 +1,10 @@
-using System;
+namespace PMS_WEBAPI.Models;
 
-namespace PMS_WEBAPI.Models
+public record Patient
 {
-    public class Patient
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string? Gender { get; set; }
-        public string? Phone { get; set; }
-        public string? Email { get; set; }
-    }
+    public int Id { get; init; }
+    public string FirstName { get; init; } = string.Empty;
+    public string LastName { get; init; } = string.Empty;
+    public DateTime DateOfBirth { get; init; }
+    public string? Notes { get; init; }
 }

@@ -1,44 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
 using PMS_WEBAPI.Models;
 using PMS_WEBAPI.Services;
-using System;
 
-namespace PMS_WEBAPI.Controllers
+namespace PMS_WEBAPI.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class PatientsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class PatientsController : ControllerBase
+    private readonly IPatientService _service;
+
+    public PatientsController(IPatientService service)
     {
-        private readonly IPatientService _service;
+        _service = service;
+    }
 
-        public PatientsController(IPatientService service)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    public ActionResult<IEnumerable<Patient>> Get()
+    {
+        return Ok(_service.GetAll());
+    }
 
-        // GET: api/patients
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var patients = _service.GetAll();
-            return Ok(patients);
-        }
+    [HttpGet("{id:int}", Name = "GetPatient")]
+    public ActionResult<Patient> GetById(int id)
+    {
+        var patient = _service.GetById(id);
+        if (patient is null) return NotFound();
+        return Ok(patient);
+    }
 
-        // GET: api/patients/{id}
-        [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
-        {
-            var patient = _service.GetById(id);
-            if (patient == null) return NotFound();
-            return Ok(patient);
-        }
-
-        // POST: api/patients
-        [HttpPost]
-        public IActionResult Create([FromBody] Patient patient)
-        {
-            var created = _service.Add(patient);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
-        }
+    [HttpPost]
+    public ActionResult<Patient> Create([FromBody] Patient patient)
+    {
+        var created = _service.Add(patient);
+        return CreatedAtRoute("GetPatient", new { id = created.Id }, created);
     }
 }

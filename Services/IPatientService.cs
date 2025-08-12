@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using PMS_WEBAPI.Models;
 
-namespace PMS_WEBAPI.Services
+namespace PMS_WEBAPI.Services;
+
+public interface IPatientService
 {
-    public interface IPatientService
-    {
-        IEnumerable<Patient> GetAll();
-        Patient? GetById(Guid id);
-        Patient Add(Patient patient);
-    }
+    IEnumerable<Patient> GetAll();
+    Patient? GetById(int id);
+    Patient Add(Patient patient);
 }

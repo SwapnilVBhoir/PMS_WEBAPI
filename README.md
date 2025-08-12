@@ -1,48 +1,46 @@
 # PMS_WEBAPI
 
-A simple .NET 8 Web API sample project with an in-memory patient service.
+A minimal .NET 8 Web API sample for Patients (in-memory).
 
-## Features
-- .NET 8 Web API
-- PatientsController with GET and POST endpoints
-- In-memory `PatientService`
-- Swagger (Swashbuckle) enabled
-- CORS enabled for `http://localhost:4200`
-- GitHub Actions workflow to build and test on push
+## Requirements
+- .NET 8 SDK installed
 
 ## Run locally
-
-1. Ensure you have .NET 8 SDK installed: https://dotnet.microsoft.com/en/download
-2. From the project root:
+1. Restore & build:
 ```bash
 dotnet restore
 dotnet build
+```
+
+2. Run:
+```bash
 dotnet run
 ```
 
-By default the app will listen on the URLs shown in the console. Swagger UI (in Development) will be available at:
-```
-https://localhost:5001/swagger/index.html
-```
+Swagger UI (Development): `https://localhost:5001/swagger`
 
 ## API Endpoints
-
-- `GET /api/patients` - list patients
+- `GET /api/patients` - list sample patients
 - `GET /api/patients/{id}` - get patient by id
-- `POST /api/patients` - create a new patient (JSON body)
+- `POST /api/patients` - create patient (body -> Patient model)
 
-## Init Git and push to GitHub
+## CORS
+CORS policy allows `http://localhost:4200` for Angular dev server.
+
+## Git
+Initialize and push to GitHub:
 
 ```bash
 git init
 git add .
 git commit -m "Initial commit - PMS_WEBAPI"
-# create repo on GitHub and then:
-git remote add origin https://github.com/<your-username>/PMS_WEBAPI.git
 git branch -M main
+git remote add origin git@github.com:<you>/<repo>.git
 git push -u origin main
 ```
 
-## GitHub Actions
-
-See `.github/workflows/dotnet.yml` in this repo for CI that runs `dotnet build` and `dotnet test`.
+## Tests
+From the solution root run:
+```bash
+dotnet test
+```
